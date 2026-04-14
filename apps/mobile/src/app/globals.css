@@ -1,26 +1,70 @@
-@import "tailwindcss";
-@import "@repo/tailwind-config";
+@import 'tailwindcss';
+@import '@repo/tailwind-config';
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--safe-area-inset-top: 0px;
+	--safe-area-inset-right: 0px;
+	--safe-area-inset-bottom: 0px;
+	--safe-area-inset-left: 0px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@theme inline {
+	--font-joyride-std: var(--font-joyride-std);
 }
 
+html,
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	height: -webkit-fill-available;
+}
+
+@theme {
+	--safe-top: max(env(safe-area-inset-top), var(--safe-area-inset-top));
+	--safe-bottom: max(
+		env(safe-area-inset-bottom),
+		var(--safe-area-inset-bottom)
+	);
+	--safe-left: max(env(safe-area-inset-left), var(--safe-area-inset-left));
+	--safe-right: max(env(safe-area-inset-right), var(--safe-area-inset-right));
+}
+
+@utility pt-safe {
+	padding-top: var(--safe-top);
+}
+
+@utility pb-safe {
+	padding-bottom: var(--safe-bottom);
+}
+
+@utility pl-safe {
+	padding-left: var(--safe-left);
+}
+
+@utility pr-safe {
+	padding-right: var(--safe-right);
+}
+
+@utility px-safe {
+	padding-left: var(--safe-left);
+	padding-right: var(--safe-right);
+}
+
+@utility py-safe {
+	padding-top: var(--safe-top);
+	padding-bottom: var(--safe-bottom);
+}
+
+@utility min-h-screen-safe {
+	min-height: calc(100vh - var(--safe-top) - var(--safe-bottom));
+}
+
+@utility h-screen-safe {
+	height: calc(100vh - var(--safe-top) - var(--safe-bottom));
+}
+
+@utility mb-safe {
+	margin-bottom: var(--safe-bottom);
+}
+
+@utility mt-safe {
+	margin-top: var(--safe-top);
 }

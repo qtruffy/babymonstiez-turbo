@@ -1,21 +1,39 @@
 {
-  "$schema": "https://turborepo.dev/schema.json",
-  "ui": "tui",
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
-    },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    }
-  }
+	"$schema": "https://turborepo.dev/schema.json",
+	"ui": "tui",
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": ["$TURBO_DEFAULT$", ".env*"],
+			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+		},
+		"lint": {
+			"dependsOn": ["^lint"]
+		},
+		"check-types": {
+			"dependsOn": ["^check-types"]
+		},
+		"dev": {
+			"dependsOn": ["@babymonstiez/supabase#start"],
+			"cache": false,
+			"persistent": true
+		},
+		"@babymonstiez/supabase#start": {
+			"cache": false
+		},
+		"@babymonstiez/supabase#stop": {
+			"cache": false
+		},
+		"@babymonstiez/supabase#reset": {
+			"cache": false
+		},
+		"@babymonstiez/supabase#generate:types": {
+			"dependsOn": ["@babymonstiez/supabase#start"],
+			"outputs": ["src/database.types.ts"]
+		}
+	},
+	"globalEnv": [
+		"NEXT_PUBLIC_SUPABASE_URL",
+		"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+	]
 }
